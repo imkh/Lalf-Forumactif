@@ -74,39 +74,49 @@ class Topic(Node):
                 yield post
 
     def _dump_(self, sqlfile):
-        first_post = self.children[0].children[0]
-        last_post = self.children[-1].children[-1]
+        if len(self.children[0].children) > 0:
+            first_post = self.children[0].children[0]
+            last_post = self.children[-1].children[-1]
 
-        replies = sum(1 for _ in self.get_posts()) - 1
+            replies = sum(1 for _ in self.get_posts()) - 1
 
-        sqlfile.insert("topics", {
-            "topic_id" : self.topic_id,
-            "forum_id" : self.forum.newid,
-            "topic_title" : self.title,
-            "topic_poster" : first_post.poster.newid,
-            "topic_time" : first_post.time,
-            "topic_views" : self.views,
-            "topic_replies" : replies,
-            "topic_replies_real" : replies,
-            "topic_status" : self.locked,
-            "topic_type" : self.topic_type,
-            "topic_first_post_id" : first_post.post_id,
-            "topic_first_poster_name" : first_post.poster.name,
-            "topic_first_poster_colour" : first_post.poster.colour,
-            "topic_last_post_id" : last_post.post_id,
-            "topic_last_poster_id" : last_post.poster.newid,
-            "topic_last_poster_name" : last_post.poster.name,
-            "topic_last_poster_colour" : last_post.poster.colour,
-            "topic_last_post_subject" : last_post.title,
-            "topic_last_post_time" : last_post.time
-        })
-
-        for user_id in set(post.poster.newid for post in self.get_posts()):
-            sqlfile.insert("topics_posted", {
-                "user_id" : user_id,
+            sqlfile.insert("topics", {
                 "topic_id" : self.topic_id,
-                "topic_posted" : 1
+                "forum_id" : self.forum.newid,
+                "topic_title" : self.title,
+                "topic_poster" : first_post.poster.newid,
+                "topic_time" : first_post.time,
+                "topic_views" : self.views,
+                "topic_replies" : replies,
+                "topic_replies_real" : replies,
+                "topic_status" : self.locked,
+                "topic_type" : self.topic_type,
+                "topic_first_post_id" : first_post.post_id,
+                "topic_first_poster_name" : first_post.poster.name,
+                "topic_first_poster_colour" : first_post.poster.colour,
+                "topic_last_post_id" : last_post.post_id,
+                "topic_last_poster_id" : last_post.poster.newid,
+                "topic_last_poster_name" : last_post.poster.name,
+                "topic_last_poster_colour" : last_post.poster.colour,
+                "topic_last_post_subject" : last_post.title,
+                "topic_last_post_time" : last_post.time
             })
+
+            for user_id in set(post.poster.newid for post in self.get_posts()):
+                sqlfile.insert("topics_posted", {
+                    "user_id" : user_id,
+                    "topic_id" : self.topic_id,
+                    "topic_posted" : 1
+                })
+        else:
+            self.logger.info('[Empty Topic] %d %s', self.topic_id, self.title)
+            # self.logger.info('============= TOPIC WITH NO POSTS =================')
+            # self.logger.info('TOPIC %d %s', self.topic_id, self.title)
+            # self.logger.info('len(self.children) = %d', len(self.children))
+            # # self.logger.info('type(self.children[0]) = %s', type(self.children[0]))
+            # self.logger.info('len(self.children[0].children) = %d', len(self.children[0].children))
+            # # self.logger.info('type(self.children[0].children[0]) = %s', type(self.children[0].children[0]))
+            # self.logger.info('==============================================')
 
 class ForumPage(Node):
     """

@@ -194,10 +194,10 @@ class BB(Node):
         sqlfile.update_config("users", "user_skype", "varchar(255)")
         
         #Own columns (specific to my own forum)
-        sqlfile.update_config("users", "user_nom_bat", "varchar(255)")
-        sqlfile.update_config("users", "user_modele_bat", "varchar(255)")
-        sqlfile.update_config("users", "user_port_bat", "varchar(255)")
-        sqlfile.update_config("users", "user_mmsi_bat", "varchar(255)")
+        # sqlfile.update_config("users", "user_nom_bat", "varchar(255)")
+        # sqlfile.update_config("users", "user_modele_bat", "varchar(255)")
+        # sqlfile.update_config("users", "user_port_bat", "varchar(255)")
+        # sqlfile.update_config("users", "user_mmsi_bat", "varchar(255)")
         
 
         # Add bbcodes tags

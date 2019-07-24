@@ -184,7 +184,7 @@ class OcrUser(User):
                     else:
                         self.lastvisit = 0
                 except IndexError:
-                    selft.logger.error("Configuration du profil de l'administrateur choisi à revoir cf https://roromis.github.io/Lalf-Forumactif/annexes/profil")
+                    self.logger.error("Configuration du profil de l'administrateur choisi à revoir cf https://roromis.github.io/Lalf-Forumactif/annexes/profil")
                     sys.exit("Erreur de configuration du forum")
                     
 

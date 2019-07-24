@@ -205,10 +205,10 @@ class User(Node):
         #Profil : signature = el_list[14]
     
         self.signature = doc("textarea[name='signature']").text() or ''
-        if len(self.signature)>0:
-            self.attachsig = 1
-        else:
-            self.attachsig = 0			
+        # if len(self.signature)>0:
+        #     self.attachsig = 1
+        # else:
+        #     self.attachsig = 0			
     
         sexe_sel = doc("input:checked[name='profile_field_16_-7'][value='1']").val()
         if sexe_sel is not None:
@@ -320,7 +320,7 @@ class User(Node):
             #"user_avatar" (TODO)
             "user_avatar" : self.avatar,
             "user_sig" : self.signature,
-            "user_attachsig" : self.attachsig,
+            # "user_attachsig" : self.attachsig,
             #"user_from" (TODO)
     
             "user_sex": self.sexe,
@@ -333,10 +333,10 @@ class User(Node):
             "user_website": self.site_web,
             
             #Specific to my own forum/site
-            "user_modele_bat" : self.modele_bat, 
-            "user_nom_bat" : self.nom_bat, 
-            "user_port_bat" : self.port_bat,
-            "user_mmsi_bat" : self.mmsi_bat
+            # "user_modele_bat" : self.modele_bat, 
+            # "user_nom_bat" : self.nom_bat, 
+            # "user_port_bat" : self.port_bat,
+            # "user_mmsi_bat" : self.mmsi_bat
         }
 
         # Check if the user is the administrator
